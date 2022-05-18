@@ -1,0 +1,32 @@
+{
+    "host": "localhost",
+    "user": "sa",
+    "password": "Weslei25*",
+    "port": "1433",
+    "database": "FiscalDefender",
+    "ciencia": "",
+    "tipo_database": "2",
+    "data_cataloga": "s",
+    "intervalo_dia_cataloga_notas": "9",
+    "tempo_exec_consulta":"60",
+    "tempo_exec":"60",
+    "INSTANCIA": "",
+    "CERTIFICADO": "",
+    "SENHA_CERTIFICADO": "",
+    "CPFCNPJ": "",
+    "TEMPO_EXECUSAO_HORAS_ROTINAS": "",
+    "CAMINHO_LOGXML_FD": "E:\\DEV_RES\\Consumo_Indevido\\temp",
+    "Certificado":"E:\\FiscalDefender_DEV_WESLEI\\APP\\Certificado",
+    "BackupXML":"C:\\Backup ssd-hp\\FD\\FiscalDefender\\Backupxml\\Integracao_Consumo_xml",
+    "Diretorios_Monitorados":"C:\\Backup ssd-hp\\FD\\FiscalDefender\\DiretoriosMonitorados",
+    "depuracao":
+    [
+        {   
+            "filename": "./logs\\Cataloga_FD.log",
+            "filemode": "a",
+            "level": "DEBUG",
+            "format": "log_format",
+            "encoding": "UTF-8" 
+        }
+    ]
+}
