@@ -24,7 +24,7 @@
         {   
             "filename": "./logs\\Cataloga_FD.log",
             "filemode": "a",
-            "level": "DEBUG",
+            "level": "INFO",
             "format": "log_format",
             "encoding": "UTF-8" 
         }

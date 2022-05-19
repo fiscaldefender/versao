@@ -250,26 +250,35 @@ def InserirNfe(resumo=False, caminho=None, arquivo_xml=None, cnpj_resumo=None):
         if verificar:
             return
         else:
-            logging.info(chave_acesso_res)
-            logging.info("Cadastrando Resumo NF-e")
-            cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)[0].text
-            xNome = resposta.xpath('//ns:resNFe/ns:xNome', namespaces=ns)[0].text
-            ie = resposta.xpath('//ns:resNFe/ns:IE', namespaces=ns)[0].text
-            dhEmi = resposta.xpath('//ns:resNFe/ns:dhEmi', namespaces=ns)[0].text
-            tpNF = resposta.xpath('//ns:resNFe/ns:tpNF', namespaces=ns)[0].text
-            vNF = resposta.xpath('//ns:resNFe/ns:vNF', namespaces=ns)[0].text
-            dhRecbto = resposta.xpath('//ns:resNFe/ns:dhRecbto', namespaces=ns)[0].text
-            nProt = resposta.xpath('//ns:resNFe/ns:nProt', namespaces=ns)[0].text 
-            cSitNFe = resposta.xpath('//ns:resNFe/ns:cSitNFe', namespaces=ns)[0].text
-            numNota = chave_acesso_res[25:34]
-            codigo_dest = db.executa_DQL(f"""select codigo_empresa  from empresa e where cpfcnpj = '{cnpj_resumo}' and token is not null;""")
-            if codigo_dest:
-                codigo_dest = codigo_dest[0][0]
-            # codigo_dest = 4
-            # eu cetei 4 pra testar  esqueci de tirar
-            db.executa_DML(f"""
-                            INSERT INTO NFEDESTINADAS( NotaFiscal, Chave_Acesso, Situacao, DataEmissao, CNPJEmitente,Emitente, IEEmitente, Codigo_dest, Ambiente, NSU, tpnf, situacaomanifesto, TOTALNOTA)
-                            VALUES({numNota},'{chave_acesso_res}',{cSitNFe},'{dhEmi}','{cnpj_emit}','{xNome}','{ie}', {codigo_dest},1, '', {tpNF}, 0, {vNF});""")
+            try:
+                logging.info("Cadastrando Resumo NF-e" + chave_acesso_res)
+                #Também é possivel ser uma nota com CPF
+                cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)
+                if cnpj_dest != []:
+                    cnpj_emit = cnpj_dest[0].text
+                else:
+                    cnpj_emit = resposta.xpath('//ns:resNFe/ns:CPF', namespaces=ns)[0].text
+
+                xNome = resposta.xpath('//ns:resNFe/ns:xNome', namespaces=ns)[0].text
+                ie = resposta.xpath('//ns:resNFe/ns:IE', namespaces=ns)[0].text
+                dhEmi = resposta.xpath('//ns:resNFe/ns:dhEmi', namespaces=ns)[0].text
+                tpNF = resposta.xpath('//ns:resNFe/ns:tpNF', namespaces=ns)[0].text
+                vNF = resposta.xpath('//ns:resNFe/ns:vNF', namespaces=ns)[0].text
+                #dhRecbto = resposta.xpath('//ns:resNFe/ns:dhRecbto', namespaces=ns)[0].text
+                #nProt = resposta.xpath('//ns:resNFe/ns:nProt', namespaces=ns)[0].text 
+                cSitNFe = resposta.xpath('//ns:resNFe/ns:cSitNFe', namespaces=ns)[0].text
+                numNota = chave_acesso_res[25:34]
+                codigo_dest = db.executa_DQL(f"""select codigo_empresa  from empresa e where cpfcnpj = '{cnpj_resumo}' and token is not null;""")
+                if codigo_dest:
+                    codigo_dest = codigo_dest[0][0]
+                # codigo_dest = 4
+                # eu cetei 4 pra testar  esqueci de tirar
+                db.executa_DML(f"""
+                                INSERT INTO NFEDESTINADAS( NotaFiscal, Chave_Acesso, Situacao, DataEmissao, CNPJEmitente,Emitente, IEEmitente, Codigo_dest, Ambiente, NSU, tpnf, situacaomanifesto, TOTALNOTA)
+                                VALUES({numNota},'{chave_acesso_res}',{cSitNFe},'{dhEmi}','{cnpj_emit}','{xNome}','{ie}', {codigo_dest},1, '', {tpNF}, 0, {vNF});""")
+            except Exception as erros:
+                logging.exception(erros)
+                return
 
 #  sql server 
 
@@ -530,7 +539,13 @@ def InserirNfe_sql_server(resumo=False, caminho=None, arquivo_xml=None, cnpj_res
         else:
             logging.info(chave_acesso_res)
             try:
-                cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)[0].text
+                #Também é possivel ser uma nota com CPF
+                cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)
+                if cnpj_dest != []:
+                    cnpj_emit = cnpj_dest[0].text
+                else:
+                    cnpj_emit = resposta.xpath('//ns:resNFe/ns:CPF', namespaces=ns)[0].text
+                
                 xNome = resposta.xpath('//ns:resNFe/ns:xNome', namespaces=ns)[0].text
                 ie = resposta.xpath('//ns:resNFe/ns:IE', namespaces=ns)[0].text
                 dataemissao = resposta.xpath('//ns:resNFe/ns:dhEmi', namespaces=ns)[0].text
