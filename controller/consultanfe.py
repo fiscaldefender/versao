@@ -49,8 +49,12 @@ def consultar_nfe(certificado, senha, uf=None, homologacao=False, CPFCNPJ=None, 
         logging.info(
             f'Quantidade de NSUs na consulta atual: {contador_resposta}')
 
-        cStat = resposta.xpath(
-            '//ns:retDistDFeInt/ns:cStat', namespaces=ns)[0].text
+        cStat = resposta.xpath('//ns:retDistDFeInt/ns:cStat', namespaces=ns)
+        if cStat != []:
+            cStat[0].text
+        else:
+            logging.warning("cStat não encontrado, continuar da proxima consulta.")
+            continue
         print(f'cStat: {cStat}')
         logging.info(f'cStat: {cStat}')
 

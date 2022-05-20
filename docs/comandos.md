@@ -1,4 +1,4 @@
- pyinstaller -F --windowed --icon="img\favicon.ico" .\main.py
+pyinstaller -F --windowed --icon="img\favicon.ico" .\main.py
 
  python -m pip freeze > requirements.txt'
 'python -m pip install -r requirements.txt'

@@ -8,7 +8,7 @@
     "tipo_database": "2",
     "data_cataloga": "s",
     "intervalo_dia_cataloga_notas": "9",
-    "tempo_exec_consulta":"60",
+    "tempo_exec_consulta":"1",
     "tempo_exec":"60",
     "INSTANCIA": "",
     "CERTIFICADO": "",

@@ -254,8 +254,8 @@ def InserirNfe(resumo=False, caminho=None, arquivo_xml=None, cnpj_resumo=None):
                 logging.info("Cadastrando Resumo NF-e" + chave_acesso_res)
                 #Também é possivel ser uma nota com CPF
                 cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)
-                if cnpj_dest != []:
-                    cnpj_emit = cnpj_dest[0].text
+                if cnpj_emit != []:
+                    cnpj_emit = cnpj_emit[0].text
                 else:
                     cnpj_emit = resposta.xpath('//ns:resNFe/ns:CPF', namespaces=ns)[0].text
 
@@ -541,8 +541,8 @@ def InserirNfe_sql_server(resumo=False, caminho=None, arquivo_xml=None, cnpj_res
             try:
                 #Também é possivel ser uma nota com CPF
                 cnpj_emit = resposta.xpath('//ns:resNFe/ns:CNPJ', namespaces=ns)
-                if cnpj_dest != []:
-                    cnpj_emit = cnpj_dest[0].text
+                if cnpj_emit != []:
+                    cnpj_emit = cnpj_emit[0].text
                 else:
                     cnpj_emit = resposta.xpath('//ns:resNFe/ns:CPF', namespaces=ns)[0].text
                 
